@@ -80,6 +80,7 @@ function App() {
             className="flex-1/6"
             placeholder=""
             type="number"
+            min={1}
           />
         </div>
         <Button disabled={!isBtnEnabled} size={"lg"} className={"w-full"} onClick={handleAddItem}>
