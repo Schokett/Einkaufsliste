@@ -2,17 +2,34 @@ import { Button } from "@/components/ui/button";
 import "./App.css";
 import { Input } from "@/components/ui/input";
 import { CheckCircleIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [input, setInput] = useState<string>("");
+  const [inputNumber, setInputNumber] = useState<string>("");
+
+  const isBtnEnabled = input.trim() !== "" && inputNumber.trim() !== "";
+
   return (
     <>
       <section className="m-5 flex flex-col max-w-lg mx-auto gap-4 text-center justify-center items-center">
         <h1 className="text-3xl font-bold font-roboto mt-10">Einkaufsliste</h1>
         <div className="flex gap-2 w-full ">
-          <Input className="flex-auto" placeholder="Produkt eingeben..." />
-          <Input className="flex-1/6" placeholder="" type="number" />
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-auto"
+            placeholder="Produkt eingeben..."
+          />
+          <Input
+            value={inputNumber}
+            onChange={(e) => setInputNumber(e.target.value)}
+            className="flex-1/6"
+            placeholder=""
+            type="number"
+          />
         </div>
-        <Button size={"lg"} className={"w-full"}>
+        <Button disabled={!isBtnEnabled} size={"lg"} className={"w-full"}>
           Eintrag Hinzufügen
         </Button>
 
