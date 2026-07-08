@@ -18,12 +18,11 @@ function App() {
 
   // speichern
   const [items, setItems] = useState<Item[]>(() => {
-    const savedItems = localStorage.getItem("shopping_list");
-    return savedItems ? JSON.parse(savedItems) : [];
+    const SAVEDITEMS_KEY = localStorage.getItem("shopping_list");
+    return SAVEDITEMS_KEY ? JSON.parse(SAVEDITEMS_KEY) : [];
   });
 
   const isBtnEnabled = input.trim() !== "" && inputNumber !== 0;
-
   const handleAddItem = () => {
     if (!isBtnEnabled) return;
 
@@ -43,7 +42,6 @@ function App() {
 
     const updatedItems = [newItem, ...items];
     setItems(updatedItems);
-
     localStorage.setItem("shopping_list", JSON.stringify(updatedItems));
 
     setInput("");
