@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import "./App.css";
 import { Input } from "@/components/ui/input";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import "./App.css";
 import { CheckCircleIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -25,6 +27,14 @@ function App() {
   const handleAddItem = () => {
     if (!isBtnEnabled) return;
 
+    const exists = items.some((item) => item.name === input.trim());
+    if (exists) {
+      toast.error("Schon vorhanden", {
+        description: `"${input.trim()}" steht bereits auf der Liste.`,
+      });
+      return;
+    }
+
     const newItem: Item = {
       id: crypto.randomUUID(),
       name: input.trim(),
@@ -42,6 +52,19 @@ function App() {
 
   return (
     <>
+      <Toaster
+        theme="light"
+        position="top-center"
+        richColors
+        closeButton
+        toastOptions={{
+          classNames: {
+            toast: "rounded-xl border-2",
+            title: "font-bold",
+            description: "text-muted-foreground",
+          },
+        }}
+      />
       <section className="m-5 flex flex-col max-w-lg mx-auto gap-4 text-center justify-center items-center">
         <h1 className="text-3xl font-bold font-roboto mt-10">Einkaufsliste</h1>
         <div className="flex gap-2 w-full ">
