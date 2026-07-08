@@ -14,7 +14,7 @@ interface Item {
 
 function App() {
   const [input, setInput] = useState<string>("");
-  const [inputNumber, setInputNumber] = useState<string>("");
+  const [inputNumber, setInputNumber] = useState<number>(0);
 
   // speichern
   const [items, setItems] = useState<Item[]>(() => {
@@ -22,7 +22,7 @@ function App() {
     return savedItems ? JSON.parse(savedItems) : [];
   });
 
-  const isBtnEnabled = input.trim() !== "" && inputNumber.trim() !== "";
+  const isBtnEnabled = input.trim() !== "" && inputNumber !== 0;
 
   const handleAddItem = () => {
     if (!isBtnEnabled) return;
@@ -47,7 +47,7 @@ function App() {
     localStorage.setItem("shopping_list", JSON.stringify(updatedItems));
 
     setInput("");
-    setInputNumber("");
+    setInputNumber(0);
   };
 
   return (
@@ -75,8 +75,8 @@ function App() {
             placeholder="Produkt eingeben..."
           />
           <Input
-            value={inputNumber}
-            onChange={(e) => setInputNumber(e.target.value)}
+            value={inputNumber.toString()}
+            onChange={(e) => setInputNumber(Number(e.target.value))}
             className="flex-1/6"
             placeholder=""
             type="number"
