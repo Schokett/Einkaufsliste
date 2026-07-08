@@ -59,7 +59,7 @@ function App() {
         closeButton
         toastOptions={{
           classNames: {
-            toast: "rounded-xl border-2",
+            toast: "rounded-xl border-2 !bg-red-600 !text-white !border-red-700",
             title: "font-bold",
             description: "text-muted-foreground",
           },
