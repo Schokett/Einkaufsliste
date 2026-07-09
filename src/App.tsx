@@ -60,18 +60,24 @@ function App() {
 
   const handleDeleteItem = (id: string) => {
     setItems((list) => list.filter((item) => item.id != id));
+
+    toast.success("Produkt gelöscht", {
+      description: `"${input.trim()}" wurde aus der Einkaufsliste entfernt.`,
+    });
   };
 
   return (
     <>
       <Toaster
         theme="light"
-        position="top-center"
+        position="bottom-right"
         richColors
         closeButton
         toastOptions={{
           classNames: {
-            toast: "rounded-xl border-2 !bg-red-600 !text-white !border-red-700",
+            toast: "rounded-xl border-2",
+            error: "!bg-red-600 !text-white !border-red-700",
+            success: "!bg-emerald-600 !text-white !border-emerald-700",
             title: "font-bold",
             description: "text-muted-foreground",
           },
