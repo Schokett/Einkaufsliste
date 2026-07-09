@@ -58,6 +58,10 @@ function App() {
     setItems(items.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item)));
   };
 
+  const handleDeleteItem = (id: string) => {
+    setItems((prev) => prev.filter((item) => item.id != id));
+  };
+
   return (
     <>
       <Toaster
@@ -101,7 +105,10 @@ function App() {
               key={item.id}
               className="border bg-card rounded-xl p-5 text-card-foreground flex justify-between items-center">
               <div className="items-start flex flex-col">
-                <h3 className="text-lg font-semibold">{item.name}</h3>
+                <h3
+                  className={`text-lg font-semibold ${item.checked ? "text-muted-foreground line-through" : ""}`}>
+                  {item.name}
+                </h3>
                 <p className="text-sm text-muted-foreground">{item.amount}</p>
               </div>
               <div className="flex gap-2 w-35 shrink-0">
