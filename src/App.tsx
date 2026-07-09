@@ -59,7 +59,7 @@ function App() {
   };
 
   const handleDeleteItem = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id != id));
+    setItems((list) => list.filter((item) => item.id != id));
   };
 
   return (
