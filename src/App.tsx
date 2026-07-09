@@ -134,7 +134,7 @@ function App() {
                 </h3>
                 <p className="text-sm text-muted-foreground">{item.amount}</p>
               </div>
-              <div className="flex gap-2 w-35 shrink-0">
+              <div className="flex gap-2 w-30 shrink-0">
                 {item.checked && (
                   <Button
                     size={"lg"}
