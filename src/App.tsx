@@ -100,9 +100,9 @@ function App() {
           },
         }}
       />
-      <section className="m-5 flex flex-col max-w-lg mx-auto gap-4 text-center justify-center items-center">
+      <section className="my-5 px-5 mx-auto flex flex-col max-w-lg gap-4 text-center justify-center items-center">
         <h1 className="text-3xl font-bold font-roboto mt-10">Einkaufsliste</h1>
-        <div className="flex gap-2 w-full ">
+        <div className="flex gap-2 w-full m-5 ">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
