@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import "./App.css";
-import { CheckCircleIcon, CornerUpLeft, Trash } from "lucide-react";
+import { CheckCircleIcon, Trash, Undo2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface Item {
@@ -152,7 +152,7 @@ function App() {
                     handleSequenceList(item.id);
                     handleToggleItem(item.id);
                   }}>
-                  {item.checked ? <CornerUpLeft /> : <CheckCircleIcon />}
+                  {item.checked ? <Undo2Icon /> : <CheckCircleIcon />}
                   {item.checked ? "Zurück" : "Abhaken"}
                 </Button>
               </div>
