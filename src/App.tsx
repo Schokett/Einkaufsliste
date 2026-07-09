@@ -3,26 +3,32 @@ import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import "./App.css";
-import { CheckCircleIcon } from "lucide-react";
-import { useState } from "react";
+import { CheckCircleIcon, CornerUpLeft, Trash } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface Item {
   id: string;
   name: string;
   amount: number;
+  checked: boolean;
 }
 
 function App() {
   const [input, setInput] = useState<string>("");
   const [inputNumber, setInputNumber] = useState<number>(0);
 
-  // speichern
   const [items, setItems] = useState<Item[]>(() => {
     const SAVEDITEMS_KEY = localStorage.getItem("shopping_list");
     return SAVEDITEMS_KEY ? JSON.parse(SAVEDITEMS_KEY) : [];
   });
 
   const isBtnEnabled = input.trim() !== "" && inputNumber !== 0;
+
+  // speichern
+  useEffect(() => {
+    localStorage.setItem("shopping_list", JSON.stringify(items));
+  }, [items]);
+
   const handleAddItem = () => {
     if (!isBtnEnabled) return;
 
@@ -38,14 +44,18 @@ function App() {
       id: crypto.randomUUID(),
       name: input.trim(),
       amount: Number(inputNumber),
+      checked: false,
     };
 
     const updatedItems = [newItem, ...items];
     setItems(updatedItems);
-    localStorage.setItem("shopping_list", JSON.stringify(updatedItems));
 
     setInput("");
     setInputNumber(0);
+  };
+
+  const handleToggleItem = (id: string) => {
+    setItems(items.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item)));
   };
 
   return (
@@ -94,10 +104,25 @@ function App() {
                 <h3 className="text-lg font-semibold">{item.name}</h3>
                 <p className="text-sm text-muted-foreground">{item.amount}</p>
               </div>
-              <Button size={"lg"} variant={"outline"}>
-                <CheckCircleIcon />
-                Abhaken
-              </Button>
+              <div className="flex gap-2 w-35 shrink-0">
+                {item.checked && (
+                  <Button
+                    size={"lg"}
+                    variant="destructive"
+                    className={"bg-rose-600 cursor-pointer text-white flex-1/3"}
+                    onClick={() => handleDeleteItem(item.id)}>
+                    <Trash />
+                  </Button>
+                )}
+                <Button
+                  size={"lg"}
+                  className={`flex-2/3 cursor-pointer ${item.checked ? "bg-slate-100 text-black hover:bg-slate-200 cursor-pointer" : ""}`}
+                  variant={item.checked ? "default" : "outline"}
+                  onClick={() => handleToggleItem(item.id)}>
+                  {item.checked ? <CornerUpLeft /> : <CheckCircleIcon />}
+                  {item.checked ? "Zurück" : "Abhaken"}
+                </Button>
+              </div>
             </div>
           ))}
         </div>
