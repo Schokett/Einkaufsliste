@@ -55,7 +55,16 @@ function App() {
   };
 
   const handleToggleItem = (id: string) => {
-    setItems(items.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item)));
+    setItems((list) => {
+      const toggled = list.find((item) => item.id === id);
+      if (!toggled) return list;
+
+      const updated = { ...toggled, checked: !toggled.checked };
+      const rest = list.filter((item) => item.id !== id);
+
+      // abgehakt → ans Ende, reaktiviert → nach oben
+      return updated.checked ? [...rest, updated] : [updated, ...rest];
+    });
   };
 
   const handleDeleteItem = (id: string) => {
@@ -63,6 +72,14 @@ function App() {
 
     toast.success("Produkt gelöscht", {
       description: `"${input.trim()}" wurde aus der Einkaufsliste entfernt.`,
+    });
+  };
+  const handleSequenceList = (id: string) => {
+    setItems((list) => {
+      const movedItem = list.find((item) => item.id === id);
+      if (!movedItem) return list;
+
+      return [...list.filter((item) => item.id !== id), movedItem];
     });
   };
 
@@ -131,7 +148,10 @@ function App() {
                   size={"lg"}
                   className={`flex-2/3 cursor-pointer ${item.checked ? "bg-slate-100 text-black hover:bg-slate-200 cursor-pointer" : ""}`}
                   variant={item.checked ? "default" : "outline"}
-                  onClick={() => handleToggleItem(item.id)}>
+                  onClick={() => {
+                    handleSequenceList(item.id);
+                    handleToggleItem(item.id);
+                  }}>
                   {item.checked ? <CornerUpLeft /> : <CheckCircleIcon />}
                   {item.checked ? "Zurück" : "Abhaken"}
                 </Button>
